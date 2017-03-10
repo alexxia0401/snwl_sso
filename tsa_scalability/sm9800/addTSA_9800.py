@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 
 '''This script could automatically configure WAN IP after UTM is factory default booted.
 Written by: Alex (Qing) Xia
