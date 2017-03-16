@@ -6,6 +6,7 @@ Need to install pycurl module first.
 
 import pycurl
 import StringIO
+import json
 
 buf = StringIO.StringIO()
 
@@ -19,5 +20,11 @@ c.setopt(c.WRITEFUNCTION, buf.write)
 c.perform()
 
 result = buf.getvalue()
-print(result)
 buf.close()
+print(result)
+
+data = json.loads(result)
+print data
+
+print data['Stub']
+print data['MethodOutput'][0]['SharedKey']
