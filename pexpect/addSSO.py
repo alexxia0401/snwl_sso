@@ -17,7 +17,6 @@ pip3 install pexpect
 import pexpect
 import time
 import sys
-import os
 
 def usage():
     print('''Usage: command WANIP SSOAgentIP sharedKey
