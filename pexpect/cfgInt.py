@@ -14,9 +14,6 @@ Tested on Ubuntu16.04
 import pexpect
 import time
 import sys
-import os
-
-os.system("rm -f ~/.ssh/known_hosts")
 
 def usage():
     print('''Usage: command WANIP interface zone interfaceIP
@@ -40,36 +37,36 @@ def checkPara():
 def cfgInt(wanip, interface, zone, interfaceip):
     '''configure interface IP, zone.'''
     #ssh login
-    child = pexpect.spawnu('ssh admin@%s' % wanip)
+    child = pexpect.spawn('ssh admin@%s' % wanip, encoding='utf-8')
     child.logfile = sys.stdout
     
     # first ssh login or not
-    while True:
-        index = child.expect(["\(yes/no\)\?", "password:"])
-        if index == 0:
-            child.sendline("yes")
-            child.expect("admin@%s's password:" % wanip)
-            child.sendline("password")
-            break
-        elif index == 1:
-            child.sendline("password")
-            break
-        else:
-            print("Program error! Exit.")
-            sys.exit()
+    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip])
+    if index == 0:
+        child.sendline("yes")
+    elif index == 1:
+        pass
+    else:
+        print("Program error! Exit.")
+        sys.exit()
     
     # start configuring
-    
+    child.sendline("password")
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
     
-    index == child.expect(["\(yes/no\)\?", "config\([A-Z0-9]{12}\)#"])
-    if index == 0:
+    # override logged in admin user
+    index2 = child.expect(["\[no\]:", "config\([A-Z0-9]{12}\)#", pexpect.TIMEOUT])
+    if index2 == 0:
         child.sendline("yes")
-    else:
+    elif index2 == 1:
         pass
-    
-    child.expect("config\([A-Z0-9]{12}\)#")
+    elif index2 == 2:
+        print('No pattern matched!!!')
+    else:
+        print('Wrong!!!')
+   
+    #child.expect("config\([A-Z0-9]{12}\)#") 
     child.sendline("interface %s" % interface)
     
     child.expect("\(edit-interface\[%s\]\)#" % interface)
