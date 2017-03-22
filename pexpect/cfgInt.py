@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 '''
 This script configure interface zone and IP.
@@ -6,6 +6,9 @@ Written by: Alex (Qing) Xia
 Version: 0.2
 Date: 3/21/2017
 This script needs WAN IP ssh enabled.
+!!! Using python3 !!!
+diff: child = pexpect.spawnu(command)
+Tested on Ubuntu16.04
 '''
 
 import pexpect
@@ -16,8 +19,8 @@ import os
 os.system("rm -f ~/.ssh/known_hosts")
 
 def usage():
-    print '''Usage: command WANIP interface zone interfaceIP
-e.g. ./cfgItfIP.py 10.0.0.20 X2 LAN 192.168.10.1'''
+    print('''Usage: command WANIP interface zone interfaceIP
+e.g. ./cfgItfIP.py 10.0.0.20 X2 LAN 192.168.10.1''')
 
 def checkPara():
     '''check parameters'''
@@ -37,7 +40,7 @@ def checkPara():
 def cfgInt(wanip, interface, zone, interfaceip):
     '''configure interface IP, zone.'''
     #ssh login
-    child = pexpect.spawn("ssh admin@%s" % wanip)
+    child = pexpect.spawnu('ssh admin@%s' % wanip)
     child.logfile = sys.stdout
     
     # first ssh login or not
@@ -52,7 +55,7 @@ def cfgInt(wanip, interface, zone, interfaceip):
             child.sendline("password")
             break
         else:
-            print "Program error! Exit."
+            print("Program error! Exit.")
             sys.exit()
     
     # start configuring
