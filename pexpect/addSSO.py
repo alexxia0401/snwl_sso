@@ -7,17 +7,17 @@ Version: 0.2
 Date: 3/22/2017
 This script doesn't work if UTM is not in non-conf t mode.
 !!! Using python3 !!!
-diff: child = pexpect.spawnu(command)
+reference:
+https://pexpect.readthedocs.io/en/latest/api/pexpect.html#handling-unicode
 Tested on Ubuntu16.04
-
+apt-get install python-pip3
+pip3 install pexpect
 '''
 
 import pexpect
 import time
 import sys
 import os
-
-os.system("rm -f ~/.ssh/known_hosts")
 
 def usage():
     print('''Usage: command WANIP SSOAgentIP sharedKey
@@ -40,33 +40,26 @@ def checkPara():
 
 def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     #ssh login
-    child = pexpect.spawnu("ssh admin@%s" % wanip)
+    child = pexpect.spawn("ssh admin@%s" % wanip, encoding='utf-8')
     child.logfile = sys.stdout
     
     # first ssh login or not
-    while True:
-        index = child.expect(["\(yes/no\)\?", "password:"])
-        if index == 0:
-            child.sendline("yes")
-            child.expect("admin@%s's password:" % wanip)
-            child.sendline("password")
-            break
-        elif index == 1:
-            child.sendline("password")
-            break
-        else:
-            print("Program error! Exit.")
-            sys.exit()
+    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, pexpect.TIMEOUT])
+    if index == 0:
+        child.sendline("yes")
+    elif index == 1:
+        pass
+    elif index == 2:
+        print('No pattern matched!!!')
+    else:
+        print("Program error! Exit.")
+        sys.exit()
     
+    child.sendline("password")
+
     #configure SSO agent IP, enable this agent, enable SSO authentication.
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
-    
-    index == child.expect(["\(yes/no\)\?", "config\([A-Z0-9]{12}\)#"])
-    if index == 0:
-        child.sendline("yes")
-    else:
-        pass
     
     child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("user sso")
