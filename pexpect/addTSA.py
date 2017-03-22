@@ -59,8 +59,19 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     #configure SSO agent IP, enable this agent, enable SSO authentication.
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
-    
-    child.expect("config\([A-Z0-9]{12}\)#")
+
+    # override logged in admin user
+    index2 = child.expect(["\[no\]:", "config\([A-Z0-9]{12}\)#", pexpect.TIMEOUT])
+    if index2 == 0:
+        child.sendline("yes")
+    elif index2 == 1:
+        pass
+    elif index2 == 2:
+        print('No pattern matched!!!')
+    else:
+        print('Wrong!!!')
+
+    #child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("user sso")
     
     child.expect("\(config-user-sso\)#")
