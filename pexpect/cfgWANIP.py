@@ -57,23 +57,20 @@ def cfgWANIP(wanip):
     time.sleep(1)
     child.sendline("")
     
-    while True:
-        index = child.expect(["User", "admin@[A-Z0-9]{12}>"])
-        if index == 0:
-            child.sendline("admin")
-            child.expect("Password:")
-            child.sendline("password")
-            child.expect("admin@[A-Z0-9]{12}>")
-            child.sendline("configure terminal")
-            break
-        elif index == 1:
-            child.sendline("configure terminal")        
-            break
-        else:
-            print("Program error! Exit.")
-            sys.exit()
+    index = child.expect(["User", "admin@[A-Z0-9]{12}>"])
+    if index == 0:
+        child.sendline("admin")
+        child.expect("Password:")
+        child.sendline("password")
+    elif index == 1:
+        pass
+    else:
+        print("Program error! Exit.")
+        sys.exit()
     
     # login to UTM console, starting to configure WAN IP
+    child.sendline("configure terminal")
+    
     child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("interface X1")
     
