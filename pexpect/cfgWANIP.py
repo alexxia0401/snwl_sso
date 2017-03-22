@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 '''
 This script could automatically configure WAN IP after UTM is factory default reset.
@@ -6,6 +6,9 @@ Written by: Alex (Qing) Xia
 Version: 0.2
 Date: 3/21/2017
 This script doesn't work if UTM is not in non-conf t mode.
+!!! Using python3 !!!
+diff: child = pexpect.spawnu(command)
+Tested on Ubuntu16.04
 '''
 
 import pexpect
@@ -23,8 +26,8 @@ ipDict = {'10.0.0.66':'2029',
 '10.0.0.68':'2027'}
 
 def usage():
-    print '''Usage: command WANIP
-e.g. ./cfgWANIP.py 10.0.0.25'''
+    print('''Usage: command WANIP
+e.g. ./cfgWANIP.py 10.0.0.25''')
 
 def checkPara():
     while True:
@@ -45,7 +48,7 @@ def cfgWANIP(wanip):
     port = ipDict[wanip]
     
     # start to telnet
-    child = pexpect.spawn("telnet 10.103.64.8 %s" % port)
+    child = pexpect.spawnu("telnet 10.103.64.8 %s" % port)
     child.logfile = sys.stdout
     child.expect("login:")
     child.sendline("admin")
@@ -67,7 +70,7 @@ def cfgWANIP(wanip):
             child.sendline("configure terminal")        
             break
         else:
-            print "Program error! Exit."
+            print("Program error! Exit.")
             sys.exit()
     
     # login to UTM console, starting to configure WAN IP
