@@ -41,10 +41,12 @@ def cfgInt(wanip, interface, zone, interfaceip):
     child.logfile = sys.stdout
     
     # first ssh login or not
-    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip])
+    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password:"])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
+        pass
+    elif index == 2:
         pass
     else:
         print("Program error! Exit.")

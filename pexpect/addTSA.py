@@ -43,12 +43,14 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     child.logfile = sys.stdout
     
     # first ssh login or not
-    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, pexpect.TIMEOUT])
+    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password:", pexpect.TIMEOUT])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
         pass
-    elif index == 2:
+    elif index == 2:   # SM9800 6.2.1.4
+        pass
+    elif index == 3:
         print('No pattern matched!!!')
     else:
         print("Program error! Exit.")

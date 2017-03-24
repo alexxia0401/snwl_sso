@@ -43,7 +43,7 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     child.logfile = sys.stdout
     
     # first ssh login or not
-    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password", pexpect.TIMEOUT])
+    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password:", pexpect.TIMEOUT])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
