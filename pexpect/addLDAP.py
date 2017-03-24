@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-'''This script could automatically add LDAP server and do some configuration, like reading OU info.
-This script could automatically add SSO agent and enable it.
+'''
+This script could automatically add LDAP server and do some configuration, like reading OU info.
 Written by: Alex (Qing) Xia
 Version: 0.2
 Date: 3/22/2017
@@ -19,8 +19,8 @@ import time
 import sys
 
 def usage():
-    print('''Usage: command WANIP SSOAgentIP sharedKey
-e.g. ./addLDAP.py 10.0.0.66 192.168.10.10 Administrator cdpQa123 shssoqa1.com''')
+    print('''Usage: command wanip ldapServerIP ldapUser password domainName
+e.g. ./addLDAP.py 10.0.0.24 192.168.10.10 Administrator cdpQa123 shssoqa1.com''')
 
 def checkPara():
     '''check parameters'''
