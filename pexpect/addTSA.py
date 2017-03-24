@@ -19,7 +19,7 @@ import time
 import sys
 
 def usage():
-    print('''Usage: command WANIP SSOAgentIP sharedKey
+    print('''Usage: command WANIP TSAAgentIP sharedKey
 e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456''')
 
 def checkPara():
@@ -56,7 +56,7 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     
     child.sendline("password")   
  
-    #configure SSO agent IP, enable this agent, enable SSO authentication.
+    #configure TSA agent IP, enable this agent, enable TSA authentication.
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
 
