@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#This script is deprecated. Pls. use python script to call functions.
+
 if [ ${#} -ne 1 ]; then
     echo "./command IP, e.g. ./command 10.0.0.20"
     exit
