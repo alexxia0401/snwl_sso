@@ -7,7 +7,6 @@ Version: 0.2
 Date: 3/21/2017
 This script doesn't work if UTM is not in non-conf t mode.
 !!! Using python3 !!!
-diff: child = pexpect.spawnu(command)
 Tested on Ubuntu16.04
 '''
 
@@ -16,12 +15,13 @@ import time
 import sys
 
 # get port number
-ipDict = {'10.0.0.66':'2029',
+ipDict = {
 '10.0.0.20':'2043',
 '10.0.0.24':'2010',
 '10.0.0.25':'2011',
 '10.0.0.61':'2022',
 '10.0.0.64':'2025',
+'10.0.0.66':'2029',
 '10.0.0.67':'2026',
 '10.0.0.68':'2027'}
 
@@ -48,7 +48,7 @@ def cfgWANIP(wanip):
     port = ipDict[wanip]
     
     # start to telnet
-    child = pexpect.spawnu("telnet 10.103.64.8 %s" % port)
+    child = pexpect.spawn("telnet 10.103.64.8 %s" % port, encoding = 'utf-8')
     child.logfile = sys.stdout
     child.expect("login:")
     child.sendline("admin")
@@ -100,6 +100,12 @@ def cfgWANIP(wanip):
     
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("commit")
+
+    child.expect("\(edit-interface\[X1\]\)#")
+    child.sendline("exit")
+
+    child.expect("config\([A-Z0-9]{12}\)#")
+    child.sendline("exit")
     
     time.sleep(2)
     child.close()
