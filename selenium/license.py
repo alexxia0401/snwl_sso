@@ -41,4 +41,7 @@ driver.find_element_by_name("pwd").send_keys("password")
 driver.find_element_by_name("Submit").click()
 
 time.sleep(30)
-#driver.quit()
+result = driver.find_element_by_class_name("instructions").text
+cmp = 'Thank you for registering this product. Registration completed successfully.'
+if cmp == result:
+    driver.quit()
