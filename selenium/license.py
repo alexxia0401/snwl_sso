@@ -29,7 +29,7 @@ driver.find_element_by_name("pwd").send_keys("password")
 driver.find_element_by_name("Submit").click()
 
 # active in license page
-driver.get("https://10.0.0.24/activationView.html")
+driver.get(url + "/activationView.html")
 driver.find_element_by_link_text("click here").click()
 #driver.implicitly_wait(15)
 
