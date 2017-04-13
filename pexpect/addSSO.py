@@ -3,39 +3,30 @@
 '''
 This script could automatically add SSO agent and enable it.
 Written by: Alex (Qing) Xia
-Version: 0.2
-Date: 3/22/2017
-This script doesn't work if UTM is not in non-conf t mode.
-!!! Using python3 !!!
 reference:
 https://pexpect.readthedocs.io/en/latest/api/pexpect.html#handling-unicode
-Tested on Ubuntu16.04
-apt-get install python-pip3
-pip3 install pexpect
+Tested on Ubuntu16.04 and Python3
 '''
 
+import argparse
 import pexpect
 import time
 import sys
 
-def usage():
-    print('''Usage: command WANIP SSOAgentIP sharedKey
-e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456''')
-
 def checkPara():
     '''check input parameters'''
-    while True:
-        if len(sys.argv) == 1:
-            usage()
-            sys.exit()
-        elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
-            usage()
-            sys.exit()
-        elif len(sys.argv) != 4: 
-            usage()
-            sys.exit()
-        else:
-            break
+    parser = argparse.ArgumentParser(description='''e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456''')
+    parser.add_argument('wanip', help='firewall WAN IP, need ssh to be enabled')
+    parser.add_argument('ip', help='SSO agent IP')
+    parser.add_argument('key', help='SSO agent shared key', default=123456)
+    args = parser.parse_args()
+
+    global wanIp
+    global ip
+    global key
+    wanIp  = args.wanip
+    ip = args.ip
+    key = args.key
 
 def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     #ssh login
@@ -99,4 +90,4 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
 
 if __name__ == '__main__':
     checkPara()
-    addSSO(wanip = sys.argv[1], ssoAgentIP = sys.argv[2], ssoAgentKey = sys.argv[3])
+    addSSO(wanip=wanIp, ssoAgentIP=ip, ssoAgentKey=key)
