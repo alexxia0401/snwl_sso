@@ -36,10 +36,10 @@ class sso:
         req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
         response = urllib.request.urlopen(req)
         data = response.read()
+        response.close()
         data = data.decode()
         #print data
         data = json.loads(data)
-        response.close()
         print('Adding SSO agent %s result: %s' % (ip, data['Message']))
         
     def getSSO(self):
@@ -47,9 +47,10 @@ class sso:
         req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
         response = urllib.request.urlopen(req)
         data = response.read()
+        response.close()
         data = data.decode()
         data = json.loads(data)
-        response.close()
+
         print('-' * 20)
         for i in data['MethodOutput']:
             print('IP:', i['Ip'])
@@ -65,35 +66,33 @@ class sso:
         req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
         response = urllib.request.urlopen(req)
         data = response.read()
+        response.close()
         data = data.decode()
         #print data
         data = json.loads(data)
-        response.close()
-        index = -1
+
         for i in data['MethodOutput']:
             if i['Ip'] == str(ip):
                 index = i['Index']
         #print index
-        # need to raise exception if index is null
-        if index == -1:
-            print("Didn't find appliance. Won't continue delete operation.")
-            sys.exit()
-            #raise Exception
-        sso.delSsoData['MethodInput']['Index'] = index
-        #print sso.delSsoData
-        jdata = json.dumps(sso.delSsoData)
-        req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
-        response = urllib.request.urlopen(req)
-        data = response.read()
-        data = data.decode()
-        #print data
-        data = json.loads(data)
-        response.close()
-        print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
-        
+        try:
+            sso.delSsoData['MethodInput']['Index'] = index
+        except:
+            print("Didn't find %s, abort delete operation." % ip)
+        else:
+            jdata = json.dumps(sso.delSsoData)
+            req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
+            response = urllib.request.urlopen(req)
+            data = response.read()
+            response.close()
+            data = data.decode()
+            #print data
+            data = json.loads(data)
+            print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
 
 if __name__ == '__main__':
     alexSSO = sso('http://10.103.64.44:12348')
     alexSSO.getSSO()
     #alexSSO.addSSO('6.6.7.8', '123456', 'test7')
-    #alexSSO.delSSO('6.6.7.8')
+    alexSSO.delSSO('6.6.7.8')
+    alexSSO.getSSO()
