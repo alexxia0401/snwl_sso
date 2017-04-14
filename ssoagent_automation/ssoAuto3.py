@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 '''
-This script uses JSON to communicate with SSO agent to configure SSO appliaces.
+This script uses JSON to communicate with SSO agent to configure SSO appliance.
 Apply for SSO agent 4.1.x
 Tested under Python 3.5.x
 Author: Qing Xia
@@ -10,7 +10,6 @@ Create Date: April 11th 2017
 
 import urllib.request
 import json
-import sys
 
 class SSO:
     '''Implemented add, get, delete SSO agent'''
