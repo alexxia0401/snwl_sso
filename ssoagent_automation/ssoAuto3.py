@@ -1,39 +1,63 @@
 #!/usr/bin/python3
 
 '''
-SSO configuraton automation script
-Apply for SSO 4.1.x
-Using Python 3.5.x
-Author: Alex Xia
-Date: April 11th 2017
-Tested under Ubuntu 16.04
+This script uses JSON to communicate with SSO agent to configure SSO appliaces.
+Apply for SSO agent 4.1.x
+Tested under Python 3.5.x
+Author: Qing Xia
+Create Date: April 11th 2017
 '''
 
 import urllib.request
 import json
 import sys
 
-class sso:
-    '''Implement add, get, delete SSO agent'''
-    header = {'Content-Type' : 'application/json'}
+class SSO:
+    '''Implemented add, get, delete SSO agent'''
+    header = {'Content-Type': 'application/json'}
 
     # JSON data
-    addSsoData = {"MethodInput":{"Index":0,"Ip":"","Port":'',"FriendlyName":"","SharedKey":""},"MethodName":"AddAppliance","Stub":1}
-    getSsoData = {"MethodInput":"","MethodName":"GetApplianceList","Stub":2}
-    updSsoData = ''
-    delSsoData = {"MethodInput":{"Index":''},"MethodName":"RemoveAppliance","Stub":4}
+    addSSOData = {
+        "MethodInput": {
+            "FriendlyName": "",
+            "Index": 0,
+            "Ip": "",
+            "Port": "",
+            "SharedKey": ""
+        },
+        "MethodName": "AddAppliance",
+        "Stub": 1
+    }
+
+    getSSOData = {
+        "MethodInput": "",
+        "MethodName": "GetApplianceList",
+        "Stub": 2
+    }
+
+    updSSOData = ''
+
+    delSSOData = {
+        "MethodInput": {
+            "Index": ""
+        },
+        "MethodName": "RemoveAppliance",
+        "Stub": 4
+    }
 
     def __init__(self, url):
         self.url = url
 
-    def addSSO(self, ip, key, name, port = 2258):
-        sso.addSsoData['MethodInput']['Ip'] = str(ip)
-        sso.addSsoData['MethodInput']['Port'] = port
-        sso.addSsoData['MethodInput']['FriendlyName'] = str(name)
-        sso.addSsoData['MethodInput']['SharedKey'] = str(key)
-        #print sso.addSsoData
-        jdata = json.dumps(sso.addSsoData)
-        req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
+    def addSSO(self, ip, key, name, port=2258):
+        SSO.addSSOData['MethodInput']['Ip'] = str(ip)
+        SSO.addSSOData['MethodInput']['Port'] = port
+        SSO.addSSOData['MethodInput']['FriendlyName'] = str(name)
+        SSO.addSSOData['MethodInput']['SharedKey'] = str(key)
+        #print SSO.addSSOData
+        jdata = json.dumps(SSO.addSSOData)
+        req = urllib.request.Request(self.url,
+                                     jdata.encode('utf-8'),
+                                     SSO.header)
         response = urllib.request.urlopen(req)
         data = response.read()
         response.close()
@@ -43,8 +67,10 @@ class sso:
         print('Adding SSO agent %s result: %s' % (ip, data['Message']))
         
     def getSSO(self):
-        jdata = json.dumps(sso.getSsoData)
-        req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
+        jdata = json.dumps(SSO.getSSOData)
+        req = urllib.request.Request(self.url,
+                                     jdata.encode('utf-8'),
+                                     SSO.header)
         response = urllib.request.urlopen(req)
         data = response.read()
         response.close()
@@ -62,8 +88,10 @@ class sso:
         pass
 
     def delSSO(self, ip):
-        jdata = json.dumps(sso.getSsoData)
-        req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
+        jdata = json.dumps(SSO.getSSOData)
+        req = urllib.request.Request(self.url,
+                                     jdata.encode('utf-8'),
+                                     SSO.header)
         response = urllib.request.urlopen(req)
         data = response.read()
         response.close()
@@ -76,12 +104,14 @@ class sso:
                 index = i['Index']
         #print index
         try:
-            sso.delSsoData['MethodInput']['Index'] = index
+            SSO.delSSOData['MethodInput']['Index'] = index
         except:
             print("Didn't find %s, abort delete operation." % ip)
         else:
-            jdata = json.dumps(sso.delSsoData)
-            req = urllib.request.Request(self.url, jdata.encode('utf-8'), sso.header)
+            jdata = json.dumps(SSO.delSSOData)
+            req = urllib.request.Request(self.url,
+                                         jdata.encode('utf-8'),
+                                         SSO.header)
             response = urllib.request.urlopen(req)
             data = response.read()
             response.close()
@@ -91,7 +121,7 @@ class sso:
             print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
 
 if __name__ == '__main__':
-    alexSSO = sso('http://10.103.64.44:12348')
+    alexSSO = SSO('http://10.103.64.44:12348')
     alexSSO.getSSO()
     #alexSSO.addSSO('6.6.7.8', '123456', 'test7')
     alexSSO.delSSO('6.6.7.8')
