@@ -2,7 +2,7 @@
 
 '''
 This script could automatically add SSO agent and enable it.
-Written by: Alex (Qing) Xia
+Written by: Qing Xia
 reference:
 https://pexpect.readthedocs.io/en/latest/api/pexpect.html#handling-unicode
 Tested on Ubuntu16.04 and Python3
@@ -10,15 +10,21 @@ Tested on Ubuntu16.04 and Python3
 
 import argparse
 import pexpect
-import time
 import sys
+import time
 
 def checkPara():
     '''check input parameters'''
-    parser = argparse.ArgumentParser(description='''e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456''')
-    parser.add_argument('wanip', help='firewall WAN IP, need ssh to be enabled')
+    usage='''e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456'''
+    parser = argparse.ArgumentParser(description=usage)
+    parser.add_argument('wanip',
+                        help='firewall WAN IP, need ssh to be enabled')
     parser.add_argument('ip', help='SSO agent IP')
-    parser.add_argument('key', help='SSO agent shared key', default=123456)
+    parser.add_argument('key',
+                        help='SSO agent shared key',
+                        default=123456,
+                        nargs='?',
+                        type=str)
     args = parser.parse_args()
 
     global wanIp
@@ -34,7 +40,10 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     child.logfile = sys.stdout
     
     # first ssh login or not
-    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password:", pexpect.TIMEOUT])
+    index = child.expect(["\(yes/no\)\?",
+                          "admin@%s's password:" % wanip,
+                          "Password:",
+                          pexpect.TIMEOUT])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
@@ -54,7 +63,9 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     child.sendline("configure terminal")
 
     # override logged in admin user
-    index2 = child.expect(["\[no\]:", "config\([A-Z0-9]{12}\)#", pexpect.TIMEOUT])
+    index2 = child.expect(["\[no\]:",
+                           "config\([A-Z0-9]{12}\)#",
+                           pexpect.TIMEOUT])
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
@@ -85,7 +96,7 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     child.expect("\(config-user-sso\)#")
     child.sendline("commit")
     
-    time.sleep(2)
+    time.sleep(1)
     child.close()
 
 if __name__ == '__main__':
