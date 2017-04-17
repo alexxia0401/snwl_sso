@@ -1,41 +1,49 @@
 #!/usr/bin/python3
 
 '''
-This script could automatically add LDAP server and do some configuration, like reading OU info.
+This script add LDAP server and do some configuration, like reading OU info.
 Written by: Alex (Qing) Xia
-Version: 0.2
-Date: 3/22/2017
-This script doesn't work if UTM is not in non-conf t mode.
-!!! Using python3 !!!
 reference:
 https://pexpect.readthedocs.io/en/latest/api/pexpect.html#handling-unicode
 Tested on Ubuntu16.04
-apt-get install python-pip3
-pip3 install pexpect
 '''
 
+import argparse
 import pexpect
-import time
 import sys
-
-def usage():
-    print('''Usage: command wanip ldapServerIP ldapUser password domainName
-e.g. ./addLDAP.py 10.0.0.24 192.168.10.10 Administrator cdpQa123 shssoqa1.com''')
+import time
 
 def checkPara():
     '''check parameters'''
-    while True:
-        if len(sys.argv) == 1:
-            usage()
-            sys.exit()
-        elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
-            usage()
-            sys.exit()
-        elif len(sys.argv) != 6: 
-            usage()
-            sys.exit()
-        else:
-            break
+    usage='e.g. ./addLDAP.py 10.0.0.24 192.168.10.10 Administrator ' +\
+          'cdpQa123 shssoqa1.com'
+    parser = argparse.ArgumentParser(description=usage)
+    parser.add_argument('wanIP')
+    parser.add_argument('ldapIP',
+                        default='192.168.10.10',
+                        nargs='?')
+    parser.add_argument('user',
+                        default='Administrator',
+                        nargs='?')
+    parser.add_argument('password',
+                        default='cdpQa123',
+                        nargs='?')
+    parser.add_argument('domain',
+                        default='shssoqa1.com',
+                        nargs='?')
+    args = parser.parse_args()
+
+    global wanIP
+    global ldapIP
+    global user
+    global password
+    global domain
+
+    wanIP = args.wanIP
+    ldapIP = args.ldapIP
+    user = args.user
+    password = args.password
+    domain = args.domain
 
 def addLDAP(wanip, ldapIP, user, password, domain):
     #ssh login
@@ -56,7 +64,9 @@ def addLDAP(wanip, ldapIP, user, password, domain):
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
     
-    index2 = child.expect(["\[no\]:", "config\([A-Z0-9]{12}\)#", pexpect.TIMEOUT])
+    index2 = child.expect(["\[no\]:",
+                           "config\([A-Z0-9]{12}\)#",
+                           pexpect.TIMEOUT])
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
@@ -112,4 +122,4 @@ def addLDAP(wanip, ldapIP, user, password, domain):
 
 if __name__ == '__main__':
     checkPara()
-    addLDAP(wanip = sys.argv[1], ldapIP = sys.argv[2], user = sys.argv[3], password = sys.argv[4], domain = sys.argv[5])
+    addLDAP(wanIP, ldapIP, user, password, domain)
