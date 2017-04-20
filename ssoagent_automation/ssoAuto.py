@@ -63,7 +63,11 @@ class SSO:
         data = data.decode()
         #print data
         data = json.loads(data)
-        print('Adding SSO agent %s result: %s' % (ip, data['Message']))
+        if data['Message'] == 'success':
+            return 1
+        else:
+            return 0
+        #print('Adding SSO agent %s result: %s' % (ip, data['Message']))
         
     def getSSO(self):
         jdata = json.dumps(SSO.getSSOData)
@@ -75,7 +79,9 @@ class SSO:
         response.close()
         data = data.decode()
         data = json.loads(data)
+        return data
 
+    def showSSO(self, data):
         print('-' * 20)
         for i in data['MethodOutput']:
             print('IP:', i['Ip'])
@@ -105,7 +111,8 @@ class SSO:
         try:
             SSO.delSSOData['MethodInput']['Index'] = index
         except:
-            print("Didn't find %s, abort delete operation." % ip)
+            return 0
+            #print("Didn't find %s, abort delete operation." % ip)
         else:
             jdata = json.dumps(SSO.delSSOData)
             req = urllib.request.Request(self.url,
@@ -117,11 +124,22 @@ class SSO:
             data = data.decode()
             #print data
             data = json.loads(data)
-            print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
+            if data['Message'] == 'success':
+                return 1
+            else:
+                return 0
+            #print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
 
 if __name__ == '__main__':
     alexSSO = SSO('http://10.103.64.44:12348')
-    alexSSO.getSSO()
-    #alexSSO.addSSO('6.6.7.8', '123456', 'test7')
-    alexSSO.delSSO('6.6.7.8')
-    alexSSO.getSSO()
+    result = alexSSO.getSSO()
+    alexSSO.showSSO(result)
+    result = alexSSO.addSSO('6.6.7.8', '123456', 'test7')
+    if result == 1:
+        print('adding successfully.')
+    alexSSO.showSSO(alexSSO.getSSO())
+
+    result = alexSSO.delSSO('6.6.7.8')
+    if result == 1:
+        print('deleting successfully.')
+    alexSSO.showSSO(alexSSO.getSSO())
