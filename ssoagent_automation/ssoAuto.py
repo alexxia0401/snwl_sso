@@ -64,9 +64,9 @@ class SSO:
         #print data
         data = json.loads(data)
         if data['Message'] == 'success':
-            return 1
+            return (True, data)
         else:
-            return 0
+            return (False, data)
         #print('Adding SSO agent %s result: %s' % (ip, data['Message']))
         
     def getSSO(self):
@@ -111,7 +111,7 @@ class SSO:
         try:
             SSO.delSSOData['MethodInput']['Index'] = index
         except:
-            return 0
+            return -1
             #print("Didn't find %s, abort delete operation." % ip)
         else:
             jdata = json.dumps(SSO.delSSOData)
@@ -125,21 +125,22 @@ class SSO:
             #print data
             data = json.loads(data)
             if data['Message'] == 'success':
-                return 1
+                return (True, data)
             else:
-                return 0
+                return (False, data)
             #print('Deleting SSO agent %s result: %s' % (ip, data['Message']))
 
 if __name__ == '__main__':
     alexSSO = SSO('http://10.103.64.44:12348')
     result = alexSSO.getSSO()
     alexSSO.showSSO(result)
-    result = alexSSO.addSSO('6.6.7.8', '123456', 'test7')
-    if result == 1:
+    (result, data) = alexSSO.addSSO('6.6.7.8', '123456', 'test7')
+    if result == True:
         print('adding successfully.')
+        #print(data)
     alexSSO.showSSO(alexSSO.getSSO())
 
-    result = alexSSO.delSSO('6.6.7.8')
+    (result, data) = alexSSO.delSSO('6.6.7.8')
     if result == 1:
         print('deleting successfully.')
     alexSSO.showSSO(alexSSO.getSSO())
