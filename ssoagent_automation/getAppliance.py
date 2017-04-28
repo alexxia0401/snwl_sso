@@ -1,14 +1,19 @@
 #!/usr/bin/python
 
-'''A prototype using JSON to configure SSO agent 4.1'''
-
 import urllib2
 import json
 
+url = 'http://10.103.64.68:12348'
 data = {"MethodInput":"","MethodName":"GetApplianceList","Stub":2}
+header = {'Content-Type' : 'application/json'}
 
-req = urllib2.Request('http://10.103.64.44:12348')
-req.add_header('Content-Type', 'application/json')
+req = urllib2.Request(url, json.dumps(data), header)
+response = urllib2.urlopen(req)
+data = response.read()
+print data
+response.close()
 
-response = urllib2.urlopen(req, json.dumps(data))
-print response.read()
+data = json.loads(data)
+
+ip = data['MethodOutput'][0]['Ip']
+print 'IP is', ip

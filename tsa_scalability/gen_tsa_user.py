@@ -11,7 +11,7 @@ test,user2
 
 def gen_tsa_user():
     fp = open('static.csv','w')
-    for i in range(0,10000):
+    for i in range(0,15000):
         fp.write('test,user%s\r\n' % str(i))
 
 if __name__ == '__main__':

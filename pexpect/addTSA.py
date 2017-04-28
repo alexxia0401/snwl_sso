@@ -94,9 +94,9 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     child.expect("\(config-user-sso\)#")
     child.sendline("commit")
     
-    time.sleep(2)
+    time.sleep(1)
     child.close()
 
 if __name__ == '__main__':
     checkPara()
-    addTSA(wanip = sys.argv[1], tsaAgentIP = sys.argv[2], tsaAgentKey = sys.argv[3])
+    addTSA(wanip=sys.argv[1], tsaAgentIP=sys.argv[2], tsaAgentKey=sys.argv[3])

@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 
 '''
-This script could automatically configure WAN IP after UTM is factory default reset.
+This script configures WAN IP after FW is factory default reset.
 Written by: Alex (Qing) Xia
-Version: 0.2
-Date: 3/21/2017
+Init Date: Nov 2017
 This script doesn't work if UTM is not in non-conf t mode.
-!!! Using python3 !!!
 Tested on Ubuntu16.04
+Python3.5.x
 '''
 
 import pexpect
@@ -16,14 +15,17 @@ import sys
 
 # get port number
 ipDict = {
-'10.0.0.20':'2043',
-'10.0.0.24':'2010',
-'10.0.0.25':'2011',
-'10.0.0.61':'2022',
-'10.0.0.64':'2025',
-'10.0.0.66':'2029',
-'10.0.0.67':'2026',
-'10.0.0.68':'2027'}
+    '10.0.0.20': '2043',
+    '10.0.0.23': '2046',
+    '10.0.0.24': '2010',
+    '10.0.0.25': '2011',
+    '10.0.0.27': '2014',
+    '10.0.0.61': '2022',
+    '10.0.0.64': '2025',
+    '10.0.0.66': '2029',
+    '10.0.0.67': '2026',
+    '10.0.0.68': '2027',
+}
 
 def usage():
     print('''Usage: command WANIP
@@ -48,7 +50,7 @@ def cfgWANIP(wanip):
     port = ipDict[wanip]
     
     # start to telnet
-    child = pexpect.spawn("telnet 10.103.64.8 %s" % port, encoding = 'utf-8')
+    child = pexpect.spawn("telnet 10.103.64.8 %s" % port, encoding='utf-8')
     child.logfile = sys.stdout
     child.expect("login:")
     child.sendline("admin")
@@ -112,4 +114,4 @@ def cfgWANIP(wanip):
 
 if __name__ == '__main__':
     checkPara()
-    cfgWANIP(wanip = sys.argv[1])
+    cfgWANIP(wanip=sys.argv[1])

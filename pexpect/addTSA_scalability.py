@@ -14,6 +14,6 @@ def repeat(c, key, wanip, m = 63):
 
 if __name__ == '__main__':
     for j in range(81, 89):
-        repeat(j, '123456', '10.0.0.68')
+        repeat(j, '123456', '10.0.0.67')
 
-    repeat(89, '123456', '10.0.0.68', 17)
+    repeat(89, '123456', '10.0.0.67', 17)
