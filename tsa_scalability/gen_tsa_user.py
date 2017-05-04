@@ -10,9 +10,10 @@ test,user2
 '''
 
 def gen_tsa_user():
-    fp = open('static.csv','w')
-    for i in range(0,15000):
-        fp.write('test,user%s\r\n' % str(i))
+    with open('static.csv','w') as fp:
+        for i in range(0,15000):
+            n = str(i)
+            fp.write('test,user%s\r\n' % n.zfill(5))
 
 if __name__ == '__main__':
     gen_tsa_user()

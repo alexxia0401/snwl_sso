@@ -9,20 +9,20 @@ test,user2
 ...
 '''
 
-def gen_tsa_user(c, i, j):
-    filename = 'static' + str(c) + '.csv'
-    fp = open(filename,'w')
-    while i <= j:
-        fp.write('test,user%s\r\n' % str(i))
-        i += 1
+def gen_tsa_user(fileCount, startUser, maxUser):
+    filename = 'static' + str(fileCount) + '.csv'
+    with open(filename,'w') as fp:
+        while startUser <= maxUser:
+            fp.write('test,user%s\r\n' % str(startUser))
+            startUser += 1
 
 if __name__ == '__main__':
-    a = 1
-    b = 1
-    c = 1000
+    count = 1
+    b = 10001
+    c = 12500
 
-    while a <= 9:
-        gen_tsa_user(a, b, c)
-        a += 1
-        b += 1000
-        c += 1000
+    while count <= 9:
+        gen_tsa_user(count, b, c)
+        count += 1
+        b += 10000
+        c += 10000
