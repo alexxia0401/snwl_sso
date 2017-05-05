@@ -1,5 +1,4 @@
 *.pyc
 *.log
 *.csv
-
-/tmp
+*.bat
