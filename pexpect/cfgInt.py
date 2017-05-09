@@ -43,7 +43,8 @@ def cfgInt(wanip, interface, zone, interfaceip):
     
     # first ssh login or not
     index = child.expect(["\(yes/no\)\?",
-        "admin@%s's password:" % wanip, "Password:"])
+                          "admin@%s's password:" % wanip,
+                          "Password:"])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
@@ -61,8 +62,8 @@ def cfgInt(wanip, interface, zone, interfaceip):
     
     # override logged in admin user
     index2 = child.expect(["\[no\]:",
-        "config\([A-Z0-9]{12}\)#",
-        pexpect.TIMEOUT])
+                           "config\([A-Z0-9]{12}\)#",
+                           pexpect.TIMEOUT])
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
