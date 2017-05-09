@@ -2,16 +2,15 @@
 
 '''
 This script configures WAN IP after FW is factory default reset.
-Written by: Alex (Qing) Xia
-Init Date: Nov 2017
-This script doesn't work if UTM is not in non-conf t mode.
-Tested on Ubuntu16.04
-Python3.5.x
+Written by: Qing Xia
+Init Date: Nov 2016
+Tested on Ubuntu 16.04 and Python 3.5.x
 '''
 
+import argparse
 import pexpect
-import time
 import sys
+import time
 
 # get port number
 ipDict = {
@@ -27,23 +26,16 @@ ipDict = {
     '10.0.0.68': '2027',
 }
 
-def usage():
-    print('''Usage: command WANIP
-e.g. ./cfgWANIP.py 10.0.0.25''')
-
 def checkPara():
-    while True:
-        if len(sys.argv) == 1:
-            usage()
-            sys.exit()
-        elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
-            usage()
-            sys.exit()
-        elif len(sys.argv) != 2:
-            usage()
-            sys.exit()
-        else:
-            break
+    '''check input parameters'''
+    usage='''e.g. ./cfgWANIP.py 10.0.0.20'''
+    parser = argparse.ArgumentParser(description=usage)
+    parser.add_argument('wanip',
+                        help='firewall WAN IP')
+    args = parser.parse_args()
+
+    global wanIp
+    wanIp  = args.wanip
 
 def cfgWANIP(wanip):
     # telnet login (console login)
@@ -114,4 +106,4 @@ def cfgWANIP(wanip):
 
 if __name__ == '__main__':
     checkPara()
-    cfgWANIP(wanip=sys.argv[1])
+    cfgWANIP(wanIp)

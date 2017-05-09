@@ -3,36 +3,37 @@
 '''
 This script configure interface zone and IP.
 Written by: Alex (Qing) Xia
-Version: 0.2
-Date: 3/21/2017
 This script needs WAN IP ssh enabled.
-!!! Using python3 !!!
-diff: child = pexpect.spawnu(command)
-Tested on Ubuntu16.04
+Tested on Ubuntu16.04 and python3.5.x
 '''
 
+import argparse
 import pexpect
-import time
 import sys
-
-def usage():
-    print('''Usage: command WANIP interface zone interfaceIP
-e.g. ./cfgItfIP.py 10.0.0.20 X2 LAN 192.168.10.1''')
+import time
 
 def checkPara():
-    '''check parameters'''
-    while True:
-        if len(sys.argv) == 1:
-            usage()
-            sys.exit()
-        elif sys.argv[1] == '-h' or sys.argv[1] == '--help':
-            usage()
-            sys.exit()
-        elif len(sys.argv) != 5:
-            usage()
-            sys.exit()
-        else:
-            break
+    '''check input parameters'''
+    usage='''e.g. ./cfgInt.py 10.0.0.20 X2 LAN 192.168.10.1'''
+    parser = argparse.ArgumentParser(description=usage)
+    parser.add_argument('wanip',
+                        help='firewall WAN IP, need ssh to be enabled')
+    parser.add_argument('interface',
+                        help='interface you want to configure')
+    parser.add_argument('zone',
+                        help='zone you want to use')
+    parser.add_argument('interfaceIP',
+                        help='IP you want to give to interface')
+    args = parser.parse_args()
+
+    global wanIp
+    global interface
+    global zone
+    global intIp
+    wanIp  = args.wanip
+    interface = args.interface
+    zone = args.zone
+    intIp = args.interfaceIP
 
 def cfgInt(wanip, interface, zone, interfaceip):
     '''configure interface IP, zone.'''
@@ -41,7 +42,8 @@ def cfgInt(wanip, interface, zone, interfaceip):
     child.logfile = sys.stdout
     
     # first ssh login or not
-    index = child.expect(["\(yes/no\)\?", "admin@%s's password:" % wanip, "Password:"])
+    index = child.expect(["\(yes/no\)\?",
+        "admin@%s's password:" % wanip, "Password:"])
     if index == 0:
         child.sendline("yes")
     elif index == 1:
@@ -58,7 +60,9 @@ def cfgInt(wanip, interface, zone, interfaceip):
     child.sendline("configure terminal")
     
     # override logged in admin user
-    index2 = child.expect(["\[no\]:", "config\([A-Z0-9]{12}\)#", pexpect.TIMEOUT])
+    index2 = child.expect(["\[no\]:",
+        "config\([A-Z0-9]{12}\)#",
+        pexpect.TIMEOUT])
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
@@ -94,4 +98,4 @@ def cfgInt(wanip, interface, zone, interfaceip):
 
 if __name__ == '__main__':
     checkPara()
-    cfgInt(wanip = sys.argv[1], interface = sys.argv[2], zone = sys.argv[3], interfaceip = sys.argv[4])
+    cfgInt(wanIp, interface, zone, intIp)
