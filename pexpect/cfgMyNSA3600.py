@@ -17,8 +17,22 @@ if __name__ == '__main__':
     # ssh key changed, needs to remove old key.
     os.system("rm -f ~/.ssh/known_hosts")
 
-    cfgWANIP.cfgWANIP(wanip = mywanip) 
-    cfgInt.cfgInt(wanip = mywanip, interface = 'X2', zone = 'LAN', interfaceip = '192.168.10.10')
-    addSSO.addSSO(wanip = mywanip, ssoAgentIP = '192.168.10.40', ssoAgentKey = '123456')
-    addTSA.addTSA(wanip = mywanip, tsaAgentIP = '192.168.10.40', tsaAgentKey = '123456')
-    addLDAP.addLDAP(wanip = mywanip, ldapIP = '192.168.10.10', user = 'Administrator', password = 'cdpQa123', domain = 'shssoqa1')
+    cfgWANIP.cfgWANIP(wanip=mywanip) 
+    cfgInt.cfgInt(wanip=mywanip,
+                  interface='X2',
+                  zone='LAN',
+                  interfaceip='192.168.10.10')
+    
+    addSSO.addSSO(wanip=mywanip,
+                  ssoAgentIP='192.168.10.40',
+                  ssoAgentKey='123456')
+    
+    addTSA.addTSA(wanip=mywanip,
+                  tsaAgentIP='192.168.10.40',
+                  tsaAgentKey='123456')
+    
+    addLDAP.addLDAP(wanip=mywanip,
+                    ldapIP='192.168.10.10',
+                    user='Administrator',
+                    password='cdpQa123',
+                    domain='shssoqa1')
