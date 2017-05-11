@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 def conf_ip(c, ipRange):
     filename = 'conf_ip_del_' + str(c) + '.bat'
