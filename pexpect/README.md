@@ -2,7 +2,7 @@
 
 ### How to install pexpect
 ```bash
-$sudo apt-get install python3-pip
-$pip3 install pexpect
+$ sudo apt-get install python3-pip
+$ pip3 install pexpect
 ```
 in python3 shell, after `import pexpect`, no error prompt means pexpect installed successfully.
