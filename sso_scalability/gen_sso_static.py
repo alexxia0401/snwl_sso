@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-#static.csv format:
-##ip,domain\username
-#e.g.
-#192.168.0.0,alex\alex0
-#192.168.0.1,alex\alex1
+# static.csv format:
+# #ip,domain\username
+# e.g.
+# 192.168.0.0,alex\alex0
+# 192.168.0.1,alex\alex1
 
 def gen_sso_static():
     with open('static.csv','w') as fp:
