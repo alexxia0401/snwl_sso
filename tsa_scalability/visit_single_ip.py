@@ -22,7 +22,7 @@ def BindableHTTPConnectionFactory(source_ip):
     return _get
 
 page = 1
-ip = '192.168.90.2'
+ip = '192.168.81.1'
 
 while True:    
     if page >= 14000:
@@ -32,15 +32,16 @@ while True:
         def http_open(self, req):
             return self.do_open(BindableHTTPConnectionFactory(ip), req)
     
+    # connection counts within 1 second
     for j in range(5):
         try:
             opener = urllib.request.build_opener(BindableHTTPHandler)
-            url = "http://10.103.64.220/page" + str(page) + ".htm"
+            url = "http://10.103.64.220/page%s.htm" % str(page)
             page += 1
             print(opener.open(url).read().decode())
             opener.close()
         except Exception as e:
-            print('Connection "%s" failed...' % url)
+            print('%s visit "%s" failed...' % (ip, url))
             print(e)
             continue   
     time.sleep(1) 
