@@ -1,13 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
-'''
-Generate TSA users for TSA scalability test
-csv format:
-domain,user, e.g.:
-test,user1
-test,user2
-...
-'''
+# Generate TSA users for TSA scalability test
+# csv format:
+# domain,user, e.g.:
+# test,user1
+# test,user2
+# ...
 
 def gen_tsa_user(fileCount, startUser, maxUser):
     filename = 'static' + str(fileCount) + '.csv'
