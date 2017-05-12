@@ -8,5 +8,5 @@ def conf_ip(c, ipRange):
             fp.write('netsh interface ipv4 add address name="Local Area Connection" addr=192.168.%s.%s mask=255.255.0.0 gwmetric=30\r\n' % (c, i))
 
 if __name__ == '__main__':
-    for x in range(81, 90):
-        conf_ip(x, 63)
+    for i in range(81, 90):
+        conf_ip(i, 256)
