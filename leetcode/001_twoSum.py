@@ -18,12 +18,12 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        temp = {}
-        for i, value in enumerate(nums):
-            if value not in temp:
-                temp[target-value] = i
+        match = {}
+        for idx, value in enumerate(nums):
+            if value not in match:
+                match[target-value] = idx
             else:
-                return [temp[value], i]
+                return [match[value], idx]
 
 if __name__ == '__main__':
     nums = [3, 2, 4]
