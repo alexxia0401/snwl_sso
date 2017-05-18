@@ -27,21 +27,23 @@ ipDict = {
     '10.0.0.68': '2027',  # SM9800
 }
 
+
 def checkPara():
     '''check input parameters'''
-    usage='''e.g. ./cfgWANIP.py 10.0.0.20'''
+    usage = '''e.g. ./cfgWANIP.py 10.0.0.20'''
     parser = argparse.ArgumentParser(description=usage)
     parser.add_argument('wanip',
                         help='firewall WAN IP')
     args = parser.parse_args()
 
     global wanIp
-    wanIp  = args.wanip
+    wanIp = args.wanip
+
 
 def cfgWANIP(wanip):
     # telnet login (console login)
     port = ipDict[wanip]
-    
+
     # start to telnet
     child = pexpect.spawn("telnet 10.103.64.8 %s" % port, encoding='utf-8')
     child.logfile = sys.stdout
@@ -51,7 +53,7 @@ def cfgWANIP(wanip):
     child.sendline("password")
     time.sleep(1)
     child.sendline("")
-    
+
     index = child.expect(["User", "admin@[A-Z0-9]{12}>"])
     if index == 0:
         child.sendline("admin")
@@ -62,37 +64,37 @@ def cfgWANIP(wanip):
     else:
         print("Program error! Exit.")
         sys.exit()
-    
+
     # login to UTM console, starting to configure WAN IP
     child.sendline("configure terminal")
-    
+
     child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("interface X1")
-    
+
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("ip-assignment WAN static")
-    
+
     child.expect("\(edit-WAN-static\[X1\]\)#")
     child.sendline("ip %s netmask 255.255.255.0" % wanip)
-    
+
     child.expect("\(edit-WAN-static\[X1\]\)#")
     child.sendline("gateway 10.0.0.1")
-    
+
     child.expect("\(edit-WAN-static\[X1\]\)#")
     child.sendline("dns primary 10.217.131.101")
-    
+
     child.expect("\(edit-WAN-static\[X1\]\)#")
     child.sendline("exit")
-    
+
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("management https")
-    
+
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("management ssh")
-    
+
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("management ping")
-    
+
     child.expect("\(edit-interface\[X1\]\)#")
     child.sendline("commit")
 
@@ -101,9 +103,10 @@ def cfgWANIP(wanip):
 
     child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("exit")
-    
+
     time.sleep(2)
     child.close()
+
 
 if __name__ == '__main__':
     checkPara()
