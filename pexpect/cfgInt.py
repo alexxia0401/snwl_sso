@@ -12,9 +12,10 @@ import pexpect
 import sys
 import time
 
+
 def checkPara():
     '''check input parameters'''
-    usage='''e.g. ./cfgInt.py 10.0.0.20 X2 LAN 192.168.10.1'''
+    usage = '''e.g. ./cfgInt.py 10.0.0.20 X2 LAN 192.168.10.1'''
     parser = argparse.ArgumentParser(description=usage)
     parser.add_argument('wanip',
                         help='firewall WAN IP, need ssh to be enabled')
@@ -30,17 +31,19 @@ def checkPara():
     global interface
     global zone
     global intIp
-    wanIp  = args.wanip
+
+    wanIp = args.wanip
     interface = args.interface
     zone = args.zone
     intIp = args.interfaceIP
 
+
 def cfgInt(wanip, interface, zone, interfaceip):
     '''configure interface IP, zone.'''
-    #ssh login
+    # ssh login
     child = pexpect.spawn('ssh admin@%s' % wanip, encoding='utf-8')
     child.logfile = sys.stdout
-    
+
     # first ssh login or not
     index = child.expect(["\(yes/no\)\?",
                           "admin@%s's password:" % wanip,
@@ -54,16 +57,17 @@ def cfgInt(wanip, interface, zone, interfaceip):
     else:
         print("Program error! Exit.")
         sys.exit()
-    
+
     # start configuring
     child.sendline("password")
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
-    
+
     # override logged in admin user
     index2 = child.expect(["\[no\]:",
                            "config\([A-Z0-9]{12}\)#",
                            pexpect.TIMEOUT])
+
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
@@ -72,30 +76,31 @@ def cfgInt(wanip, interface, zone, interfaceip):
         print('No pattern matched!!!')
     else:
         print('Wrong!!!')
-   
-    #child.expect("config\([A-Z0-9]{12}\)#") 
+
+    # child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("interface %s" % interface)
-    
+
     child.expect("\(edit-interface\[%s\]\)#" % interface)
     child.sendline("ip-assignment %s static" % zone)
-    
+
     child.expect("\(edit-%s-static\[%s\]\)#" % (zone, interface))
     child.sendline("ip %s netmask 255.255.255.0" % interfaceip)
-    
+
     child.expect("\(edit-%s-static\[%s\]\)#" % (zone, interface))
     child.sendline("exit")
-    
+
     child.expect("\(edit-interface\[%s\]\)#" % interface)
     child.sendline("management https")
-    
+
     child.expect("\(edit-interface\[%s\]\)#" % interface)
     child.sendline("management ping")
-    
+
     child.expect("\(edit-interface\[%s\]\)#" % interface)
     child.sendline("commit")
-    
+
     time.sleep(2)
     child.close()
+
 
 if __name__ == '__main__':
     checkPara()
