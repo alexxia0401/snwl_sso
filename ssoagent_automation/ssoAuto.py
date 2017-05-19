@@ -14,6 +14,7 @@ Alina Liu: Domain Controller
 import json
 import urllib.request
 
+
 class SSO(object):
     '''Implemented add, get, delete SSO agent'''
     header = {'Content-Type': 'application/json'}
@@ -53,9 +54,9 @@ class SSO(object):
             "Ip": "",
             "UserName": "",
             "Passwd": "",
-            "MonitorMethods":2,
-            "EventPollingInterval":"",
-            "SessionTablePollingInterval":10
+            "MonitorMethods": 2,
+            "EventPollingInterval": "",
+            "SessionTablePollingInterval": 10
         },
         "MethodName": "AddDC",
         "Stub": 1
@@ -75,13 +76,13 @@ class SSO(object):
         "Stub": 4
     }
 
-    addESData = {       
+    addESData = {
         "MethodInput": {
-	        "UserName":"",
-            "Password":"",
+            "UserName": "",
+            "Password": "",
             "FriendlyName": "",
-            "MonitorMethod":1,
-            "EventPollingInterval":5,
+            "MonitorMethod": 1,
+            "EventPollingInterval": 5,
             "Index": 0,
             "Ip": ""
         },
@@ -113,7 +114,7 @@ class SSO(object):
         "MethodName": "AddRemoteAgent",
         "Stub": 1
     }
- 
+
     getRmtSSOData = {
         "MethodInput": "",
         "MethodName": "GetRemoteAgentList",
@@ -130,29 +131,29 @@ class SSO(object):
 
     addEDirData = {
         "MethodInput": {
-            "Ip": "", 
-            "Port": -1, 
-            "UserDN": "", 
-            "Passwd": "", 
-            "BaseDN": "", 
-            "PollingInterval": 10, 
+            "Ip": "",
+            "Port": -1,
+            "UserDN": "",
+            "Passwd": "",
+            "BaseDN": "",
+            "PollingInterval": 10,
             "UsingSSL": 1
-         }, 
-        "MethodName": "AddeDirectory", 
+         },
+        "MethodName": "AddeDirectory",
         "Stub": 1
     }
 
     getEDirData = {
-        "MethodInput": "", 
-        "MethodName": "GeteDirectoryList", 
+        "MethodInput": "",
+        "MethodName": "GeteDirectoryList",
         "Stub": 2
     }
 
     delEDirData = {
         "MethodInput": {
             "Index": ""
-        }, 
-        "MethodName": "RemoveDirectory", 
+        },
+        "MethodName": "RemoveDirectory",
         "Stub": 3
     }
 
@@ -166,7 +167,7 @@ class SSO(object):
         SSO.addSSOData['MethodInput']['SharedKey'] = str(key)
         SSO.addSSOData['Stub'] = SSO.stub
         SSO.stub += 1
-        
+
         jdata = json.dumps(SSO.addSSOData)
         req = urllib.request.Request(self.url,
                                      jdata.encode('utf-8'),
@@ -175,13 +176,12 @@ class SSO(object):
         data = response.read()
         response.close()
         data = data.decode()
-        #print(data)
         data = json.loads(data)
         if data['Message'] == 'success':
             return (True, data)
         else:
             return (False, data)
-        
+
     def getSSO(self):
         SSO.getSSOData['Stub'] = SSO.stub
         SSO.stub += 1
@@ -213,7 +213,6 @@ class SSO(object):
         data = response.read()
         response.close()
         data = data.decode()
-        #print(data)
         data = json.loads(data)
 
         for i in data['MethodOutput']:
@@ -234,7 +233,6 @@ class SSO(object):
             data = response.read()
             response.close()
             data = data.decode()
-            #print(data)
             data = json.loads(data)
             if data['Message'] == 'success':
                 return (True, data)
@@ -245,11 +243,11 @@ class SSO(object):
         SSO.addDCData['MethodInput']['Ip'] = str(ip)
         SSO.addDCData['MethodInput']['FriendlyName'] = str(friendlyName)
         SSO.addDCData['MethodInput']['UserName'] = str(userName)
-        SSO.addDCData['MethodInput']['Passwd'] = str(password) 
-        SSO.addDCData['MethodInput']['EventPollingInterval'] = eventInterval 
+        SSO.addDCData['MethodInput']['Passwd'] = str(password)
+        SSO.addDCData['MethodInput']['EventPollingInterval'] = eventInterval
         SSO.addDCData['Stub'] = SSO.stub
         SSO.stub += 1
-        
+
         jdata = json.dumps(SSO.addDCData)
         req = urllib.request.Request(self.url,
                                      jdata.encode('utf-8'),
@@ -258,7 +256,6 @@ class SSO(object):
         data = response.read()
         response.close()
         data = json.loads(data.decode())
-        #print(data)
         if data['Message'] == 'success':
             return (True, data)
         else:
@@ -297,7 +294,6 @@ class SSO(object):
         data = response.read()
         response.close()
         data = data.decode()
-        #print(data)
         data = json.loads(data)
 
         for i in data['MethodOutput']:
@@ -318,7 +314,6 @@ class SSO(object):
             data = response.read()
             response.close()
             data = data.decode()
-            #print(data)
             data = json.loads(data)
             if data['Message'] == 'success':
                 return (True, data)
@@ -367,7 +362,7 @@ class SSO(object):
             print('IP:', i['Ip'])
             print('UserName:', i['UserName'])
             print('FriendlyName:', i['FriendlyName'])
-            print('Status:',i['Hint'])
+            print('Status:', i['Hint'])
             print('-' * 20)
 
     def delES(self, ip):
@@ -404,8 +399,7 @@ class SSO(object):
                 return (True, data)
             else:
                 return (False, data)
- 
- 
+
     def addRmtSSO(self, ip, port, name):
         SSO.addRmtSSOData['MethodInput']['Ip'] = str(ip)
         SSO.addRmtSSOData['MethodInput']['Port'] = port
@@ -421,12 +415,11 @@ class SSO(object):
         data = response.read()
         response.close()
         data = json.loads(data.decode())
-        #print(data)
         if data['Message'] == 'success':
             return (True, data)
         else:
             return (False, data)
-        
+
     def getRmtSSO(self):
         SSO.getRmtSSOData['Stub'] = SSO.stub
         SSO.stub += 1
@@ -439,7 +432,7 @@ class SSO(object):
         response.close()
         data = json.loads(data.decode())
         return data
-        
+
     def showRmtSSO(self, data):
         print('-' * 20)
         for i in data['MethodOutput']:
@@ -456,7 +449,6 @@ class SSO(object):
         data = response.read()
         response.close()
         data = data.decode()
-        #print(data)
         data = json.loads(data)
 
         for i in data['MethodOutput']:
@@ -477,7 +469,6 @@ class SSO(object):
             data = response.read()
             response.close()
             data = data.decode()
-            #print(data)
             data = json.loads(data)
             if data['Message'] == 'success':
                 return (True, data)
@@ -504,7 +495,7 @@ class SSO(object):
         SSO.addEDirData["MethodInput"]["BaseDN"] = str(baseDN)
         SSO.addEDirData['Stub'] = SSO.stub
         SSO.stub += 1
-        
+
         req = urllib.request.Request(self.url)
         req.add_header('Content-Type', 'application/json')
         response = urllib.request.urlopen(req,
@@ -512,18 +503,17 @@ class SSO(object):
         data = response.read().decode()
         response.close()
         data = json.loads(data)
-        #print(data)
         if data['Message'] == 'success':
             return (True, data)
         else:
             return (False, data)
-    
+
     def delEDir(self, ip):
         req = urllib.request.Request(self.url)
         req.add_header('Content-Type', 'application/json')
         response = urllib.request.urlopen(req,
             json.dumps(SSO.getEDirData).encode('utf-8'))
-        
+
         data = response.read().decode()
         response.close()
         data = json.loads(data)
@@ -541,11 +531,10 @@ class SSO(object):
             req.add_header('Content-Type', 'application/json')
             response = urllib.request.urlopen(req,
                 json.dumps(SSO.delEDirData).encode('utf-8'))
-            
+
             data = response.read().decode()
             response.close()
             data = json.loads(data)
-            #print(data)
             if data["Message"] == "success":
                 return (True, data)
             else:
@@ -557,8 +546,9 @@ class SSO(object):
             print("Novell eDriectory server IP: %s" % i["Ip"])
             print("UserDN: %s" % i["UserDN"])
             print("BaseDN: %s" % i["BaseDN"])
-            print ("Password: %s" % i["Passwd"])
+            print("Password: %s" % i["Passwd"])
             print('-' * 20)
+
 
 # test functions
 def testSSO():
@@ -568,14 +558,16 @@ def testSSO():
     testSSO.showSSO(testSSO.getSSO())
     testSSO.delSSO('192.168.101.2')
 
+
 def testDC():
     testDC = SSO('http://10.103.64.44:12348')
     testDC.addDC('192.168.102.1', 'DC test1',
-        'qatest\\administrator','cdpQa123')
+        'qatest\\administrator', 'cdpQa123')
     testDC.addDC('192.168.102.2', 'DC test2',
-        'qatest\\administrator','cdpQa123',10)
+        'qatest\\administrator', 'cdpQa123', 10)
     testDC.showDC(testDC.getDC())
     testDC.delDC('192.168.102.2')
+
 
 def testES():
     testES = SSO('http://10.103.64.44:12348')
@@ -584,12 +576,14 @@ def testES():
     testES.showES(testES.getES())
     testES.delES('192.168.103.2')
 
+
 def testEDir():
     testEDir = SSO('http://10.103.64.44:12348')
-    testEDir.addEDir('192.168.104.1', 'CN=Admin,o=qa','123456','o=qa')
-    testEDir.addEDir('192.168.104.2', 'CN=Admin,o=qa','123456','o=qa', 637)
+    testEDir.addEDir('192.168.104.1', 'CN=Admin,o=qa', '123456', 'o=qa')
+    testEDir.addEDir('192.168.104.2', 'CN=Admin,o=qa', '123456', 'o=qa', 637)
     testEDir.showEDir(testEDir.getEDir())
     testEDir.delEDir('192.168.104.2')
+
 
 def testRmtSSO():
     testRmtSSO = SSO('http://10.103.64.44:12348')
@@ -600,8 +594,8 @@ def testRmtSSO():
 
 
 if __name__ == '__main__':
-    #testSSO()
-    #testDC()
-    #testES()
-    #testEDir()
-    #testRmtSSO()
+    testSSO()
+    # testDC()
+    # testES()
+    # testEDir()
+    # testRmtSSO()
