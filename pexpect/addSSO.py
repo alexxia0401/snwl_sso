@@ -13,9 +13,10 @@ import pexpect
 import sys
 import time
 
+
 def checkPara():
     '''check input parameters'''
-    usage='''e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456'''
+    usage = '''e.g. ./addSSO.py 10.0.0.20 192.168.10.10 123456'''
     parser = argparse.ArgumentParser(description=usage)
     parser.add_argument('wanip',
                         help='firewall WAN IP, need ssh to be enabled')
@@ -30,15 +31,16 @@ def checkPara():
     global wanIp
     global ip
     global key
-    wanIp  = args.wanip
+    wanIp = args.wanip
     ip = args.ip
     key = args.key
 
+
 def addSSO(wanip, ssoAgentIP, ssoAgentKey):
-    #ssh login
+    # ssh login
     child = pexpect.spawn("ssh admin@%s" % wanip, encoding='utf-8')
     child.logfile = sys.stdout
-    
+
     # first ssh login or not
     index = child.expect(["\(yes/no\)\?",
                           "admin@%s's password:" % wanip,
@@ -55,10 +57,10 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
     else:
         print("Program error! Exit.")
         sys.exit()
-    
+
     child.sendline("password")
 
-    #configure SSO agent IP, enable this agent, enable SSO authentication.
+    # configure SSO agent IP, enable this agent, enable SSO authentication.
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
 
@@ -74,30 +76,31 @@ def addSSO(wanip, ssoAgentIP, ssoAgentKey):
         print('No pattern matched!!!')
     else:
         print('Wrong!!!')
-    
-    #child.expect("config\([A-Z0-9]{12}\)#")
+
+    # child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("user sso")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("agent %s" % ssoAgentIP)
-    
+
     child.expect("\(add-sso-agent\[%s\]\)#" % ssoAgentIP)
     child.sendline("shared-key %s" % ssoAgentKey)
-    
+
     child.expect("\(add-sso-agent\[%s\]\)#" % ssoAgentIP)
     child.sendline("enable")
-    
+
     child.expect("\(add-sso-agent\[%s\]\)#" % ssoAgentIP)
     child.sendline("exit")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("method sso-agent")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("commit")
-    
+
     time.sleep(1)
     child.close()
+
 
 if __name__ == '__main__':
     checkPara()

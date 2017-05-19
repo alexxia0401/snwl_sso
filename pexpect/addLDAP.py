@@ -13,10 +13,11 @@ import pexpect
 import sys
 import time
 
+
 def checkPara():
     '''check parameters'''
-    usage='e.g. ./addLDAP.py 10.0.0.24 192.168.10.10 Administrator ' +\
-          'cdpQa123 shssoqa1.com'
+    usage = 'e.g. ./addLDAP.py 10.0.0.24 192.168.10.10 Administrator ' +\
+        'cdpQa123 shssoqa1.com'
     parser = argparse.ArgumentParser(description=usage)
     parser.add_argument('wanIP')
     parser.add_argument('ldapIP',
@@ -45,11 +46,12 @@ def checkPara():
     password = args.password
     domain = args.domain
 
+
 def addLDAP(wanip, ldapIP, user, password, domain):
-    #ssh login
+    # ssh login
     child = pexpect.spawn("ssh admin@%s" % wanip, encoding='utf-8')
     child.logfile = sys.stdout
-    
+
     # first ssh login or not
     index = child.expect(["\(yes/no\)\?", "password:"])
     if index == 0:
@@ -59,11 +61,11 @@ def addLDAP(wanip, ldapIP, user, password, domain):
     else:
         print("Program error! Exit.")
         sys.exit()
-    
-    child.sendline("password") 
+
+    child.sendline("password")
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
-    
+
     index2 = child.expect(["\[no\]:",
                            "config\([A-Z0-9]{12}\)#",
                            pexpect.TIMEOUT])
@@ -75,50 +77,51 @@ def addLDAP(wanip, ldapIP, user, password, domain):
         print('No pattern matched!!!')
     else:
         print('Wrong!!!')
-    
-    #child.expect("config\([A-Z0-9]{12}\)#")
+
+    # child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("user ldap")
-    
+
     child.expect("\(config-user-ldap\)#")
     child.sendline("no use-tls")
-    
+
     child.expect("\[cancel\]:")
     child.sendline("yes")
-    
+
     child.expect("\(config-user-ldap\)#")
     child.sendline("server %s" % ldapIP)
-    
+
     child.expect("\(config-ldap-server\)#")
     child.sendline("port 389")
-    
+
     child.expect("\(config-ldap-server\)#")
     child.sendline("bind name %s location %s/Users" % (user, domain))
-    
+
     child.expect("\(config-ldap-server\)#")
     child.sendline("bind-password %s" % password)
-    
+
     child.expect("\(config-ldap-server\)#")
     child.sendline("commit")
     time.sleep(1)
-    
+
     child.expect("\(config-ldap-server\)#")
     child.sendline("exit")
-    
+
     child.expect("\(config-user-ldap\)")
     child.sendline("directory")
-    
+
     child.expect("\(config-ldap-directory\)#")
     child.sendline("primary-domain %s" % domain)
-    
+
     child.expect("\(config-ldap-directory\)#")
     child.sendline("commit")
     time.sleep(1)
-    
+
     child.expect("\(config-ldap-directory\)#")
     child.sendline("read-trees-from-server replace")
     time.sleep(8)
-    
+
     child.close()
+
 
 if __name__ == '__main__':
     checkPara()

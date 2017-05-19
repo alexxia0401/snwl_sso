@@ -13,9 +13,10 @@ import pexpect
 import sys
 import time
 
+
 def checkPara():
     '''check input parameters'''
-    usage='''e.g. ./addTSA.py 10.0.0.20 192.168.10.10 123456'''
+    usage = '''e.g. ./addTSA.py 10.0.0.20 192.168.10.10 123456'''
     parser = argparse.ArgumentParser(description=usage)
     parser.add_argument('wanip',
                         help='firewall WAN IP, need ssh to be enabled')
@@ -30,20 +31,21 @@ def checkPara():
     global wanIp
     global ip
     global key
-    wanIp  = args.wanip
+    wanIp = args.wanip
     ip = args.ip
     key = args.key
+
 
 def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     '''add a new TSA on SonicOS'''
     child = pexpect.spawn("ssh admin@%s" % wanip, encoding='utf-8')
     child.logfile = sys.stdout
-    
+
     # first ssh login or not
     index = child.expect(["\(yes/no\)\?",
-        "admin@%s's password:" % wanip, "Password:",
-        pexpect.TIMEOUT])
-    
+                          "admin@%s's password:" % wanip, "Password:",
+                          pexpect.TIMEOUT])
+
     if index == 0:
         child.sendline("yes")
     elif index == 1:
@@ -55,18 +57,18 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     else:
         print("Program error! Exit.")
         sys.exit()
-    
-    child.sendline("password")   
- 
-    #configure TSA agent IP, enable this agent, enable TSA authentication.
+
+    child.sendline("password")
+
+    # configure TSA agent IP, enable this agent, enable TSA authentication.
     child.expect("admin@[A-Z0-9]{12}>")
     child.sendline("configure terminal")
 
     # override logged in admin user
     index2 = child.expect(["\[no\]:",
-        "config\([A-Z0-9]{12}\)#",
-        pexpect.TIMEOUT])
-    
+                           "config\([A-Z0-9]{12}\)#",
+                           pexpect.TIMEOUT])
+
     if index2 == 0:
         child.sendline("yes")
     elif index2 == 1:
@@ -76,29 +78,30 @@ def addTSA(wanip, tsaAgentIP, tsaAgentKey):
     else:
         print('Wrong!!!')
 
-    #child.expect("config\([A-Z0-9]{12}\)#")
+    # child.expect("config\([A-Z0-9]{12}\)#")
     child.sendline("user sso")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("terminal-services-agent %s" % tsaAgentIP)
-    
+
     child.expect("\(add-ts-agent\[%s\]\)#" % tsaAgentIP)
     child.sendline("shared-key %s" % tsaAgentKey)
-    
+
     child.expect("\(add-ts-agent\[%s\]\)#" % tsaAgentIP)
     child.sendline("enable")
-    
+
     child.expect("\(add-ts-agent\[%s\]\)#" % tsaAgentIP)
     child.sendline("exit")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("method ts-agent")
-    
+
     child.expect("\(config-user-sso\)#")
     child.sendline("commit")
-    
+
     time.sleep(1)
     child.close()
+
 
 if __name__ == '__main__':
     checkPara()
