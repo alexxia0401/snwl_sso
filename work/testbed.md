@@ -21,5 +21,5 @@ VLAN: 166
 | ip             | name            | type    |
 | ---            | ---             | ---     |
 | 100.101.0.130  | CentOS          | static  |
-| 10.74.128.131  | TBD             | DHCP    |
-| 10.74.128.158  | TBD             | DHCP    |
+| 100.101.0.131  | TBD             | DHCP    |
+| 100.101.0.158  | TBD             | DHCP    |
