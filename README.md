@@ -7,9 +7,9 @@ VLAN: 70
                                                                                    
 | IP             | device          | type    |                                     
 | ---            | ---             | ---     |                                     
-| 10.74.128.87   | switch          | static  |                                     
+| 10.74.128.87   | switch VLAN 70  | static  |                                     
 | 10.74.128.88   | desktop PC      | static  |                                     
-| 10.74.128.89   | CentOS          | static  |                                     
+| 10.74.128.89   | CentOS 6.x      | static  |                                     
                                                                                    
 ### Lab network                                                                    
                                                                                    
@@ -20,6 +20,7 @@ VLAN: 166
                                                                                    
 | IP             | device          | type    |                                     
 | ---            | ---             | ---     |                                     
-| 100.101.0.130  | CentOS          | static  |                                     
-| 100.101.0.131  | TBD             | DHCP    |                                     
-| 100.101.0.158  | TBD             | DHCP    |  
+| 100.101.0.130  | switch VLAN 166 | static  |                                     
+| 100.101.0.131  | CentOS 6.x      | DHCP    |                                     
+| 100.101.0.132  | TBD             | DHCP    |  
+| 100.101.0.158  | TBD             | DHCP    |
