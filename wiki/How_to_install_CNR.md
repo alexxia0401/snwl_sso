@@ -11,3 +11,6 @@ gtar -zxpf cnr_7_1_3-linux5.gtar.gz
 cd /usr/cnr_7_1_3/Linux5
 ./install_cnr
 ```
+
+http://<your_ip>:8080  
+admin / changeme
