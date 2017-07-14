@@ -1,5 +1,8 @@
+A simple guide on CentOS 6.x
+
 ```bash
 cd /usr
+yum install glibc.i686
 wget http://10.74.128.89/Software/jre-8u131-linux-i586.tar.gz
 tar -zxvf jre-8u131-linux-i586.tar.gz
 # make sure /usr/jre1.8.0_131 exits.
