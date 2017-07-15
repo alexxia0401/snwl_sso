@@ -21,6 +21,6 @@ VLAN: 166
 | IP             | device          | type    |                                     
 | ---            | ---             | ---     |                                     
 | 100.101.0.130  | switch VLAN 166 | static  |                                     
-| 100.101.0.131  | CentOS 6.x      | DHCP    |                                     
+| 100.101.0.131  | CentOS 6.x      | static  |                                     
 | 100.101.0.132  | TBD             | DHCP    |  
 | 100.101.0.158  | TBD             | DHCP    |
