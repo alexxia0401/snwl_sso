@@ -26,6 +26,7 @@ VLAN: 166
 | 100.101.0.158  | TBD             | DHCP    |
 
 ### Full name of abbreviation
+* MPP - Multi-Platform Phone
 * 3PCC - 3rd-Party Call Control
 * FCS - First Commercial Shipment
 * DUT - Device Under Test
