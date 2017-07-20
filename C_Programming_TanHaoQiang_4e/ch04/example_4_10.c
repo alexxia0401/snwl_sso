@@ -6,11 +6,11 @@ int main()
     float p, w, d, f;
     printf("please enter price, wight, discount: ");
     scanf("%f,%f,%d", &p, &w, &s);
-    if(s >= 3000)
+    if (s >= 3000)
         c = 12;
     else
         c = s / 250;
-    switch(c)
+    switch (c)
     {
         case 0:
             d = 0;

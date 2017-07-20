@@ -5,7 +5,7 @@ int main()
     char grade;
     scanf("%c", &grade);
     printf("Your score: ");
-    switch(grade)
+    switch (grade)
     {
         case 'A':
             printf("85~100\n");

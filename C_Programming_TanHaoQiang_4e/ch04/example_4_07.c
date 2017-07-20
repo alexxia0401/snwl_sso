@@ -7,7 +7,7 @@ int main()
     char ch;
     int a = 15, b = 23;
     ch = getchar();
-    switch(ch)
+    switch (ch)
     {
         case 'a':
         case 'A':
