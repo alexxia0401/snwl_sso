@@ -4,11 +4,11 @@ int main()
 {
     char c;
     c = getchar();
-    while(c != '\n')
+    while (c != '\n')
     {
-        if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
         {
-            if(c >= 'W' && c <= 'Z' || c >= 'w' && c <= 'z')
+            if (c >= 'W' && c <= 'Z' || c >= 'w' && c <= 'z')
                 c = c - 22;
             else
                 c = c + 4;
