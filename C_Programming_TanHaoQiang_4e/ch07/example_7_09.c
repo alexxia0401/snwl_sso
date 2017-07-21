@@ -5,12 +5,12 @@ int main()
     int max(int, int);
     int a[10], m, n, i;
     printf("Enter 10 integer numbers: ");
-    for(i = 0; i < 10; i++)
+    for (i = 0; i < 10; i++)
         scanf("%d", &a[i]);
     printf("\n");
-    for(i = 1, m = a[0], n = 0; i < 10; i++)
+    for (i = 1, m = a[0], n = 0; i < 10; i++)
     {
-        if(max(m, a[i]) > m)
+        if (max(m, a[i]) > m)
         {
             m = max(m, a[i]);
             n = i;
@@ -22,5 +22,5 @@ int main()
 
 int max(int x, int y)
 {
-    return(x > y? x: y);
+    return (x > y? x: y);
 }

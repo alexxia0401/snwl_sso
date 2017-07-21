@@ -13,7 +13,7 @@ int main()
 void hanoi(int n, char one, char two, char three)
 {
     void move(char, char);
-    if(n == 1)
+    if (n == 1)
         move(one, three);
     else
     {
