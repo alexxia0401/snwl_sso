@@ -8,8 +8,8 @@ int main()
     scanf("%d,%d", &a, &b);
     c = max(a, b);
     printf("max is %d\n", c);
+    return 0;
 }
-
 
 int max(int x, int y)
 {
