@@ -5,8 +5,7 @@ int main()
     int i, sum = 0;
     printf("please enter i, j = ? ");
     scanf("%d", &i);
-    do
-    {
+    do {
         sum = sum + i;
         i++;
     } while (i <= 10);

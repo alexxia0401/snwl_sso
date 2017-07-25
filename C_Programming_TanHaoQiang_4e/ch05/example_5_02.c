@@ -3,8 +3,7 @@
 int main()
 {
     int i = 1, sum = 0;
-    do
-    {
+    do {
         sum = sum + i;
         i++;
     } while (i <= 100);
