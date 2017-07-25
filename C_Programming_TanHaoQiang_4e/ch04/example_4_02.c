@@ -4,8 +4,7 @@ int main()
 {
     float a, b, t;
     scanf("%f,%f", &a, &b);
-    if (a > b)
-    {
+    if (a > b) {
         t = a;
         a = b;
         b = t;

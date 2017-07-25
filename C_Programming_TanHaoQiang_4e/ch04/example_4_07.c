@@ -7,8 +7,7 @@ int main()
     char ch;
     int a = 15, b = 23;
     ch = getchar();
-    switch (ch)
-    {
+    switch (ch) {
         case 'a':
         case 'A':
             action1(a, b);
@@ -23,12 +22,10 @@ int main()
     return 0;
 }
 
-void action1(int x, int y)
-{
+void action1(int x, int y) {
     printf("x + y = %d\n", x + y);
 }
 
-void action2(int x, int y)
-{
+void action2(int x, int y) {
     printf("x * y = %d\n", x * y);
 }

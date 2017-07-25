@@ -10,8 +10,7 @@ int main()
         c = 12;
     else
         c = s / 250;
-    switch (c)
-    {
+    switch (c) {
         case 0:
             d = 0;
             break;

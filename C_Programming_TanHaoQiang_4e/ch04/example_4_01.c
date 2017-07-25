@@ -6,10 +6,9 @@ int main()
     double a, b, c, disc, x1, x2, p, q;
     scanf("%lf%lf%lf", &a, &b, &c);
     disc = b * b - 4 * a * c;
-    if (disc < 0)
+    if (disc < 0) {
         printf("This equation hasn't real roots\n");
-    else
-    {
+    } else {
         p = -b / (2.0 * a);
         q = sqrt(disc) / (2.0 * a);
         x1 = p + q;
