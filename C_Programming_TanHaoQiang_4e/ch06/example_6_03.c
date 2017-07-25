@@ -10,8 +10,7 @@ int main()
     printf("\n");
     for (j = 0; j < 9; j++)
         for (i = 0; i < 9 - j; i++)
-            if (a[i] > a[i+1])
-            {
+            if (a[i] > a[i+1]) {
                 t = a[i];
                 a[i] = a[i + 1];
                 a[i + 1] = t;
