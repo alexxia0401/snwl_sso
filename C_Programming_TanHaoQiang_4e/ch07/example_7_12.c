@@ -15,11 +15,9 @@ int main()
     return 0;
 }
 
-void sort(int array[], int n)
-{
+void sort(int array[], int n) {
     int i, j, k, t;
-    for (i = 0; i < n - 1; i++)
-    {
+    for (i = 0; i < n - 1; i++) {
         k = i;
         for (j = i + 1; j < n; j++)
             if (array[j] < array[k])

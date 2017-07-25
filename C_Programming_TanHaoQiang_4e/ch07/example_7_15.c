@@ -10,8 +10,7 @@ int main()
     return 0;
 }
 
-int max(int a, int b)
-{
+int max(int a, int b) {
     int c;
     c = a > b? a: b;
     return c;

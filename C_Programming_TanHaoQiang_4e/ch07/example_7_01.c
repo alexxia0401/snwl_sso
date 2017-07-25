@@ -10,15 +10,13 @@ int main()
     return 0;
 }
 
-void print_star()
-{
+void print_star() {
     int i;
     for (i = 0; i < 16; i++)
         printf("*");
     printf("\n");    
 }
 
-void print_message()
-{
+void print_message() {
     printf("How do you do!\n");
 }

@@ -11,8 +11,7 @@ int main()
     return 0;
 }
 
-int max4(int a, int b, int c, int d)
-{
+int max4(int a, int b, int c, int d) {
     int max2(int, int);
     int m;
     m = max2(a, b);
@@ -21,8 +20,7 @@ int max4(int a, int b, int c, int d)
     return m;
 }
 
-int max2(int a, int b)
-{
+int max2(int a, int b) {
     if (a >= b)
         return a;
     else

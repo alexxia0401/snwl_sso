@@ -7,8 +7,7 @@ int main()
     return 0;
 }
 
-int age(int n)
-{
+int age(int n) {
     int c;
     if (n == 1)
         c = 10;

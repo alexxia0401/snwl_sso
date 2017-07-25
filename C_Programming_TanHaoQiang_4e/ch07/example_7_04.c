@@ -11,8 +11,7 @@ int main()
     return 0;
 }
 
-float add(float x, float y)
-{
+float add(float x, float y) {
     float z;
     z = x + y;
     return z;

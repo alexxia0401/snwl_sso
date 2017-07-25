@@ -11,8 +11,7 @@ int main()
     return 0;
 }
 
-int max(float x, float y)
-{
+int max(float x, float y) {
     float z;
     z = x > y? x: y;
     return z;

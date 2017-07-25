@@ -8,8 +8,7 @@ int main()
     return 0;
 }
  
-int max_value(int array[][4])
-{
+int max_value(int array[][4]) {
     int i, j, max;
     max = array[0][0];
     for (i = 0; i < 3; i++)

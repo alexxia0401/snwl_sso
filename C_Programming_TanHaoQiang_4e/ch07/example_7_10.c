@@ -14,8 +14,7 @@ int main()
     return 0;
 }
 
-float average(float array[10])
-{
+float average(float array[10]) {
     int i;
     float aver, sum = array[0];
     for (i = 1; i < 10; i++)

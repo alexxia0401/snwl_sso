@@ -9,8 +9,7 @@ int main()
     return 0;
 }
 
-int f(int a)
-{
+int f(int a) {
     auto int b = 0;
     static int c = 3;
     b += 1;

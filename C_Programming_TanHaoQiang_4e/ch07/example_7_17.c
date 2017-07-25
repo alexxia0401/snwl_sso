@@ -9,8 +9,7 @@ int main()
     return 0;
 }
 
-int fac(int n)
-{
+int fac(int n) {
     static int f = 1;
     f *= n;
     return f;

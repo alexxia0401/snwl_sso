@@ -12,8 +12,7 @@ int main()
 
 int A, B, C;
 
-int max()
-{
+int max() {
     int m;
     m = A > B? A: B;
     if (C > m)

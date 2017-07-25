@@ -12,8 +12,7 @@ int main()
     return 0;
 }
 
-int fac(int n)
-{
+int fac(int n) {
     int f;
     if (n < 0)
         printf("n < 0, data error!");
