@@ -6,7 +6,7 @@ int main()
     int n, k, i, m = 0;
     for (n = 101; n <= 200; n = n + 2) {
         k = sqrt(n);
-        for (i = 2; i <= k; i++) {
+        for (i = 2; i <= k; ++i) {
             if (n % i == 0)
                 break;
         }
