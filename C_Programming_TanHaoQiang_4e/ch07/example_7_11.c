@@ -13,7 +13,7 @@ int main()
 float average(float array[], int n) {
     int i;
     float aver, sum = array[0];
-    for (i = 1; i < n; i++)
+    for (i = 1; i < n; ++i)
         sum = sum + array[i];
     aver = sum / n;
     return aver;

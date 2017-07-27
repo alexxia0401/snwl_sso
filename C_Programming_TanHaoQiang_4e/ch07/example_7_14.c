@@ -9,7 +9,7 @@ int main()
     int i;
 
     printf("Please enter 10 scores: ");    
-    for (i = 0; i < 10; i++)
+    for (i = 0; i < 10; ++i)
         scanf("%f", &score[i]);
 
     ave = average(score, 10);
@@ -22,7 +22,7 @@ float average(float array[], int n) {
     float aver, sum = array[0];
     Max = Min = array[0];
 
-    for (i = 1; i < n; i++) {
+    for (i = 1; i < n; ++i) {
         if (array[i] > Max)
             Max = array[i];
         else if (array[i] < Min)

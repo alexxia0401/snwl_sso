@@ -4,7 +4,7 @@ int main()
 {
     int fac(int);
     int i;
-    for (i = 1; i <= 5; i++)
+    for (i = 1; i <= 5; ++i)
         printf("%d! = %d\n", i, fac(i));
     return 0;
 }
