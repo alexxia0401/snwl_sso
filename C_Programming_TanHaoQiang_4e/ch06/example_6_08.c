@@ -5,7 +5,7 @@ int main()
     int i, num = 0, word = 0;
     char c;
     gets(string);
-    for (i = 0; (c = string[i]) != '\0'; i++)
+    for (i = 0; (c = string[i]) != '\0'; ++i)
         if (c == ' ') {
             word = 0;
         } else if (word == 0) {
