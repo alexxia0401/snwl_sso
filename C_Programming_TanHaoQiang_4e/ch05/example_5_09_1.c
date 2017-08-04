@@ -6,12 +6,14 @@ int main()
     printf("please enter an integer number, n = ? ");
     scanf("%d", &n);
     for (i = 2; i <= n - 1; ++i) {
-        if (n % i == 0)
+        if (n % i == 0) {
             break;
+        }
     }
-    if (i < n)
+    if (i < n) {
         printf("%d is not a prime number.\n", n);
-    else
+    } else {
         printf("%d is a prime number.\n", n);
+    }
     return 0;
 }

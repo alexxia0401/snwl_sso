@@ -9,8 +9,9 @@ int main()
         printf("please enter amount: ");
         scanf("%f", &amount);
         total = total + amount;
-        if (total >= SUM)
+        if (total >= SUM) {
             break;
+        }
     }
     aver = total / i;
     printf("num = %d\naver = %10.2f\n", i, aver);

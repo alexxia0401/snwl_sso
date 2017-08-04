@@ -6,10 +6,11 @@ int main()
     c = getchar();
     while (c != '\n') {
         if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-            if (c >= 'W' && c <= 'Z' || c >= 'w' && c <= 'z')
+            if (c >= 'W' && c <= 'Z' || c >= 'w' && c <= 'z') {
                 c = c - 22;
-            else
+            } else {
                 c = c + 4;
+            }
         }
         printf("%c", c);
         c = getchar();
