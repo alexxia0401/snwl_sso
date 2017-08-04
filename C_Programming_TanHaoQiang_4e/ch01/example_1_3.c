@@ -7,7 +7,7 @@ int main()
     printf("Pls. input two numbers(e.g. 3,4): ");
     scanf("%d,%d", &a, &b);
     c = max(a, b);
-    printf("max == %d\n", c);
+    printf("max = %d\n", c);
     return 0;
 }
 
