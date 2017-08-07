@@ -12,8 +12,9 @@ int main()
 
 void print_star() {
     int i;
-    for (i = 0; i < 16; ++i)
+    for (i = 0; i < 16; ++i) {
         printf("*");
+    }
     printf("\n");    
 }
 

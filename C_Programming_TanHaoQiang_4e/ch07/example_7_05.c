@@ -21,8 +21,9 @@ int max4(int a, int b, int c, int d) {
 }
 
 int max2(int a, int b) {
-    if (a >= b)
+    if (a >= b) {
         return a;
-    else
+    } else {
         return b;
+    }
 }

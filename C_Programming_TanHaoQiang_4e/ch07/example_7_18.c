@@ -15,7 +15,8 @@ int A, B, C;
 int max() {
     int m;
     m = A > B? A: B;
-    if (C > m)
+    if (C > m) {
         m = C;
+    }
     return m;
 }
