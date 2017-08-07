@@ -11,8 +11,9 @@ int main()
     pointer_1 = &a;
     pointer_2 = &b;
 
-    if (a < b)
+    if (a < b) {
         swap(pointer_1, pointer_2);
+    }
 
     printf("max = %d, min = %d\n", a, b);
     return 0;
