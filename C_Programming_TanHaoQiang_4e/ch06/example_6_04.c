@@ -14,8 +14,9 @@ int main()
     }
     printf("array b:\n");
     for (i = 0; i <= 2; ++i) {
-        for (j = 0; j <= 1; ++j)
+        for (j = 0; j <= 1; ++j) {
             printf("%5d", b[i][j]);
+        }
         printf("\n");
     }
     return 0;
