@@ -8,6 +8,7 @@ int main()
 
     char c, str[80];
     enter_string(str);
+    printf("Pls. type the character you want to delete: ");
     scanf("%c", &c);
     delete_string(str, c);
     print_string(str);
