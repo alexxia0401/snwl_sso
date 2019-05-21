@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-def print_scores(**kw):
+def print_scores(**kwargs):
     print('      Name  Score')
     print('------------------')
-    for name, score in kw.items():
+    for name, score in kwargs.items():
         print('%10s  %d' % (name, score))
     print()
 
