@@ -2,5 +2,5 @@
 
 foo = 'abc'
 
-for w, i in enumerate(foo):
-    print(w, i)
+for index, value in enumerate(foo):
+    print(index, value)
