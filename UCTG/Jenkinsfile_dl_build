@@ -1,0 +1,22 @@
+pipeline {
+    agent { label 'download_build' }
+
+    options {
+        timeout(time: 1, unit: 'HOURS')
+        timestamps()
+    }
+
+    stages {
+        stage('DL_BUILD') {
+            steps {
+                script {
+                    node('download_build') {
+                        docker.image("chatbuildcrawler:v0.0.1").inside("-v /home/auto/chatBuildCrawler/ChatSpider/:/usr/local/chatToolDownload/ChatSpider/") {
+                            sh "python /usr/local/chatToolDownload/chatBuildSpider.py"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
